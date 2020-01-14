@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include <QApplication>
+
 
 
 int main(int argc, char *argv[])
@@ -10,8 +10,6 @@ int main(int argc, char *argv[])
     window.show();
 
     window.setWindowTitle("基于Qt的机器人数据可视化分析");
-
-
 
     return application.exec();
 }

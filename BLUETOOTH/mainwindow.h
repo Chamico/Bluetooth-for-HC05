@@ -1,8 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QApplication>
 #include <QMainWindow>
-#include <QRadioButton>
+#include "ui_mainwindow.h"
+
+#include "head.h"
+
+
 
 namespace Ui {
 class MainWindow;
@@ -16,14 +21,26 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-public slots:
-    void Init_Signal();
+    Socket *mainwindow_socket;
+    Bluetooth *mainwindow_bluetooth;
+    Thread *mainwindow_thread;
 
+public slots:
+    void SystemError(QString);
+    void SystemOutput(QString);
     void RBBluetoothOpen();
-    void RBBluetoothClose();
+    void RBBluetoorhClose();
 
 private:
-    Ui::MainWindow *ui;
+
+     Ui::MainWindow *ui;
+
+     void InitWindowGUI();
+
+
+     void InitSignals();
+
+
 };
 
 #endif // MAINWINDOW_H

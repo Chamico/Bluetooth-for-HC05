@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT += bluetooth
+QT += core
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -26,17 +27,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    Bluetooth/bluetooth.cpp \
+    Socket/socket.cpp \
+    Thread/thread.cpp \
         main.cpp \
         mainwindow.cpp \
-    Bluetooth/bluetooth.cpp \
-    Painter/painter.cpp \
 
 
 
 HEADERS += \
-        mainwindow.h \
     Bluetooth/bluetooth.h \
-    Painter/painter.h \
+    Socket/socket.h \
+    Thread/thread.h \
+    head.h \
+        mainwindow.h \
 
 
 FORMS += \
@@ -46,3 +50,5 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+LIBS += -lpthread libwsock32 libws2_32
