@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29728.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "BLUETOOTH", "BLUETOOTH.pyproj", "{F7BA1311-4184-4C3C-858F-1EB6335ABD3F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7BA1311-4184-4C3C-858F-1EB6335ABD3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7BA1311-4184-4C3C-858F-1EB6335ABD3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8CE8F7EF-4D63-405B-A153-56762F89A294}
+	EndGlobalSection
+EndGlobal
