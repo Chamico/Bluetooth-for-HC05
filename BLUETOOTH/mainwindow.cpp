@@ -37,7 +37,8 @@ void MainWindow::ConnectSingnal(){
         ui->label->setText("bad");
     }
 
-    timer_receive_data->start(100);  // 50 ms 接收一次数据
+    timer_receive_data->start();  // 50 ms 接收一次数据
+    timer_receive_data->setInterval(500);
 }
 
 
@@ -62,11 +63,40 @@ void MainWindow::BluetoothRefresh(){
     uart_->UartOpen();
 }
 
-
 void MainWindow::UpdateReceive(){
 
+    int count = 0, head = 0,tail = 0;
+    QString temp = "";
+
     QString my_string = uart_->UartGetData();
-    ui->plainTextEdit->insertPlainText(my_string);
+
+    if(my_string == NULL){
+        return;
+    }
+
+     for (int i = my_string.length() - 1;i >= 0; --i) {
+         if(my_string.at(i) == '*'){
+             count++;
+
+             if(count == 1){
+                 tail = i;
+             }
+             if(count == 2){
+                 head = i;
+                 temp = my_string.mid(head + 1, tail - 1);
+                 break;
+             }
+         }
+     }
+
+     if(temp.at(temp.length() - 1) != ';'){
+         return;
+     }else{
+         ui->plainTextEdit->appendPlainText(temp);
+         ui->plainTextEdit->insertPlainText("\n\n");
+     }
+
+
 }
 
 MainWindow::~MainWindow()
@@ -88,6 +118,6 @@ void MainWindow::RadioButtonOpenSetChecked(bool variable){
 
 void MainWindow::ComboBoxAvaliableSerialPortSet(QString str){
     ui->comboBox_avaliable_serialport->clear();
-    ui->comboBox_avaliable_serialport->addItem(str + "Serial Port");
+    ui->comboBox_avaliable_serialport->addItem(str + "  Serial Port");
 }
 

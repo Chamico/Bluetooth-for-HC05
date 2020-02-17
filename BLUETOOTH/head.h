@@ -14,6 +14,9 @@
 
 #include <QTimer>
 
+#include <QString>
+#include <string.h>
+using std::string;
 
 #include "Uart/uart.h"
 
