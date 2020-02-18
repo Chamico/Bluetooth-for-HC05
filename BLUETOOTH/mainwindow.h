@@ -17,15 +17,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-
-
-
 signals:
 
 private:
 
     Ui::MainWindow *ui;
     Uart *uart_;
+    LineChart *line_chart_;
+    Widget *widget_;
 
     QTimer *timer_receive_data;
 

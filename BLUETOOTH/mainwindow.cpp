@@ -6,17 +6,25 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
 
-    uart_ = new Uart();
-    timer_receive_data = new QTimer(this);
     ui->setupUi(this);
-    // 连接信号槽
+    widget_ = new Widget(this);
+
+    widget_->WidgetInitial();
+
+
+    uart_ = new Uart();
+//    line_chart_ = new LineChart();
+
+    timer_receive_data = new QTimer(this);
+
+//    // 连接信号槽
     ConnectSingnal();
 }
 
 void MainWindow::ConnectSingnal(){
-    bool temp1 = connect(ui->radioButton_bluetooth_open, SIGNAL(clicked(bool)), this, SLOT(BluetoothOpen()));
-    bool temp2 = connect(ui->radioButton_bluetooth_close, SIGNAL(clicked(bool)), this, SLOT(BluetoothClose()));
-    bool temp3 = connect(ui->_pushButton_refresh,SIGNAL(clicked(bool)),this,SLOT(BluetoothRefresh()));
+    bool temp1 = connect(widget_->radio_button_bluetooth_open, SIGNAL(clicked(bool)), this, SLOT(BluetoothOpen()));
+    bool temp2 = connect(widget_->radio_button_bluetooth_close, SIGNAL(clicked(bool)), this, SLOT(BluetoothClose()));
+//    bool temp3 = connect(ui->_pushButton_refresh,SIGNAL(clicked(bool)),this,SLOT(BluetoothRefresh()));
 
     bool tempz = connect(timer_receive_data, SIGNAL(timeout()), this, SLOT(UpdateReceive()));
 
@@ -26,17 +34,17 @@ void MainWindow::ConnectSingnal(){
 
     if(temp1
             && temp2
-            && temp3
+//            && temp3
             && tempz
             && tempa
             && tempb
             && tempc
 
             ){
-        ui->label->setText("good");
+        widget_->label_bluetooth_contronl->setText("good");
     }else{
 
-        ui->label->setText("bad");
+        widget_->label_bluetooth_contronl->setText("bad");
     }
 
     timer_receive_data->start();  // 50 ms 接收一次数据
@@ -45,16 +53,16 @@ void MainWindow::ConnectSingnal(){
 
 
 void MainWindow::BluetoothOpen(){
-    if(ui->radioButton_bluetooth_close->isChecked()){
-        ui->radioButton_bluetooth_close->setChecked(false);
+    if(widget_->radio_button_bluetooth_close->isChecked()){
+        widget_->radio_button_bluetooth_close->setChecked(false);
     }
 
     uart_->UartOpen();
 }
 
 void MainWindow::BluetoothClose(){
-    if(ui->radioButton_bluetooth_open->isChecked()){
-        ui->radioButton_bluetooth_open->setChecked(false);
+    if(widget_->radio_button_bluetooth_open->isChecked()){
+        widget_->radio_button_bluetooth_open->setChecked(false);
     }
 
     // 关闭串口
@@ -91,16 +99,11 @@ void MainWindow::UpdateReceive(){
      }
 
      count = 0;
-
      if(temp.isEmpty()){
          return;
      }
-     ui->plainTextEdit->appendPlainText(temp);
-     ui->plainTextEdit->appendPlainText("\n");
-
-
-
-
+     widget_->plain_text_edit_origin_data->appendPlainText(temp);
+     widget_->plain_text_edit_origin_data->appendPlainText("\n");
 }
 
 MainWindow::~MainWindow()
@@ -111,18 +114,19 @@ MainWindow::~MainWindow()
 
 
 
+void MainWindow::RadioButtonOpenSetChecked(bool variable){
+   widget_->radio_button_bluetooth_open->setChecked(variable);
+}
 
 void MainWindow::RadioButtonCloseSetChecked(bool variable){
-   ui->radioButton_bluetooth_close->setChecked(variable);
+   widget_->radio_button_bluetooth_close->setChecked(variable);
 }
 
-void MainWindow::RadioButtonOpenSetChecked(bool variable){
-   ui->radioButton_bluetooth_open->setChecked(variable);
-}
+
 
 void MainWindow::ComboBoxAvaliableSerialPortSet(QString str){
-    ui->comboBox_avaliable_serialport->clear();
-    ui->comboBox_avaliable_serialport->addItem(str + "  Serial Port");
+    widget_->combo_box__uart_number_avalible->clear();
+    widget_->combo_box__uart_number_avalible->addItem(str + "  Serial Port");
 }
 
 

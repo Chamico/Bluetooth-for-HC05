@@ -1,5 +1,6 @@
 #include "uart.h"
 
+
 Uart::Uart()
 {
     serial_port_ = new QSerialPort();
