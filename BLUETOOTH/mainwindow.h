@@ -29,6 +29,11 @@ private:
 
     QTimer *timer_receive_data;
 
+
+    int count = 0, head = 0,tail = 0, length = 0;
+    QString temp = ""  ,my_string="";
+    int i=0;
+
     void ConnectSingnal();
 
 

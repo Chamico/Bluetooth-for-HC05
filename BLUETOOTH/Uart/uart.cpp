@@ -38,7 +38,9 @@ void Uart::UartOpen(){
 QString Uart::UartGetData(){
 
     QByteArray data = serial_port_->readAll();
+    //QString str(data);
     QString str = data;
+    //emit signals_uart_data(str);
     return str;
 }
 

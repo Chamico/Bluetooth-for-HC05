@@ -23,6 +23,7 @@ void MainWindow::ConnectSingnal(){
     bool tempa = connect(uart_,SIGNAL(signals_uart_radioButton_bluetooth_close_setChecked(bool)),this,SLOT(RadioButtonCloseSetChecked(bool)));
     bool tempb = connect(uart_,SIGNAL(signals_uart_radioButton_bluetooth_open_setChecked(bool)),this,SLOT(RadioButtonOpenSetChecked(bool)));
     bool tempc = connect(uart_,SIGNAL(signals_uart_comboBox_avaliable_serialport_Set(QString)),this,SLOT(ComboBoxAvaliableSerialPortSet(QString)));
+
     if(temp1
             && temp2
             && temp3
@@ -30,6 +31,7 @@ void MainWindow::ConnectSingnal(){
             && tempa
             && tempb
             && tempc
+
             ){
         ui->label->setText("good");
     }else{
@@ -38,7 +40,7 @@ void MainWindow::ConnectSingnal(){
     }
 
     timer_receive_data->start();  // 50 ms 接收一次数据
-    timer_receive_data->setInterval(500);
+    timer_receive_data->setInterval(100);
 }
 
 
@@ -65,16 +67,15 @@ void MainWindow::BluetoothRefresh(){
 
 void MainWindow::UpdateReceive(){
 
-    int count = 0, head = 0,tail = 0;
-    QString temp = "";
+    my_string = uart_->UartGetData();
 
-    QString my_string = uart_->UartGetData();
-
-    if(my_string == NULL){
+    if(my_string.isEmpty()){
         return;
     }
 
-     for (int i = my_string.length() - 1;i >= 0; --i) {
+    length = my_string.length();
+
+     for (i = length - 1;i >= 0; --i) {
          if(my_string.at(i) == '*'){
              count++;
 
@@ -83,18 +84,21 @@ void MainWindow::UpdateReceive(){
              }
              if(count == 2){
                  head = i;
-                 temp = my_string.mid(head + 1, tail - 1);
+                 temp = my_string.mid(head + 1, tail - head - 1);
                  break;
              }
          }
      }
 
-     if(temp.at(temp.length() - 1) != ';'){
+     count = 0;
+
+     if(temp.isEmpty()){
          return;
-     }else{
-         ui->plainTextEdit->appendPlainText(temp);
-         ui->plainTextEdit->insertPlainText("\n\n");
      }
+     ui->plainTextEdit->appendPlainText(temp);
+     ui->plainTextEdit->appendPlainText("\n");
+
+
 
 
 }
@@ -120,4 +124,5 @@ void MainWindow::ComboBoxAvaliableSerialPortSet(QString str){
     ui->comboBox_avaliable_serialport->clear();
     ui->comboBox_avaliable_serialport->addItem(str + "  Serial Port");
 }
+
 

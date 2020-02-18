@@ -14,6 +14,8 @@ public:
     void UartClose();
     QString UartGetData();
 
+    QSerialPort *serial_port_;
+
 signals:
     void signals_uart_radioButton_bluetooth_close_setChecked(bool);
     void signals_uart_radioButton_bluetooth_open_setChecked(bool);
@@ -22,7 +24,7 @@ signals:
 private:
     QString serial_port_name = "";
 
-    QSerialPort *serial_port_;
+
 
 };
 
