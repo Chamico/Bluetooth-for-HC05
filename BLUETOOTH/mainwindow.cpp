@@ -13,12 +13,14 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     uart_ = new Uart();
-//    line_chart_ = new LineChart();
 
     timer_receive_data = new QTimer(this);
 
 //    // 连接信号槽
     ConnectSingnal();
+
+
+
 }
 
 void MainWindow::ConnectSingnal(){
@@ -31,7 +33,7 @@ void MainWindow::ConnectSingnal(){
     bool tempa = connect(uart_,SIGNAL(signals_uart_radioButton_bluetooth_close_setChecked(bool)),this,SLOT(RadioButtonCloseSetChecked(bool)));
     bool tempb = connect(uart_,SIGNAL(signals_uart_radioButton_bluetooth_open_setChecked(bool)),this,SLOT(RadioButtonOpenSetChecked(bool)));
     bool tempc = connect(uart_,SIGNAL(signals_uart_comboBox_avaliable_serialport_Set(QString)),this,SLOT(ComboBoxAvaliableSerialPortSet(QString)));
-
+    bool tempd = connect(this,SIGNAL(signals_mainwindow_send_data(QString)),widget_,SLOT(LineChartGetdata(QString)));
     if(temp1
             && temp2
 //            && temp3
@@ -39,7 +41,7 @@ void MainWindow::ConnectSingnal(){
             && tempa
             && tempb
             && tempc
-
+            && tempd
             ){
         widget_->label_bluetooth_contronl->setText("good");
     }else{
@@ -104,6 +106,9 @@ void MainWindow::UpdateReceive(){
      }
      widget_->plain_text_edit_origin_data->appendPlainText(temp);
      widget_->plain_text_edit_origin_data->appendPlainText("\n");
+
+     emit signals_mainwindow_send_data(temp);
+     widget_->LineChartDraw();
 }
 
 MainWindow::~MainWindow()

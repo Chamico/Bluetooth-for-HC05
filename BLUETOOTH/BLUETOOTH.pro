@@ -1,5 +1,7 @@
-QT       += serialport
 QT       += core gui
+QT       += serialport
+QT       += charts
+QT       +=core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,14 +19,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    LineChart/linechart.cpp \
+    GLWidget/glwidget.cpp \
     Uart/uart.cpp \
     Widget/widget.cpp \
     main.cpp \
     mainwindow.cpp
 
 HEADERS += \
-    LineChart/linechart.h \
+    GLWidget/glwidget.h \
     Uart/uart.h \
     Widget/widget.h \
     head.h \
@@ -42,3 +44,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     Resources/icon.ico
+
+LIBS+=-lopengl32 -lglu32

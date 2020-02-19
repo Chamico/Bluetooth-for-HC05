@@ -19,11 +19,12 @@ public:
 
 signals:
 
+    void signals_mainwindow_send_data(QString);
+
 private:
 
     Ui::MainWindow *ui;
     Uart *uart_;
-    LineChart *line_chart_;
     Widget *widget_;
 
     QTimer *timer_receive_data;
@@ -34,6 +35,7 @@ private:
     int i=0;
 
     void ConnectSingnal();
+
 
 
 
