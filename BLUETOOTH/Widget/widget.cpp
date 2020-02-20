@@ -27,9 +27,6 @@ Widget::Widget(QWidget *main_window)
     line_series_accy = new QLineSeries();
     line_series_accz = new QLineSeries();
 
-    open_gl_widget_ = new QOpenGLWidget(main_window);
-
-
 }
 
 
@@ -98,7 +95,6 @@ void Widget::PlainTextEditOriginData(){
 void Widget::LineChartInitial(){
 
     chart_gyro->setTitle("Gyro data");   //设置图表名称
-
     chart_gyro->addAxis(axis_x_gyro, Qt::AlignBottom);    //设置坐标轴
     chart_gyro->addAxis(axis_y_gyro, Qt::AlignLeft);
     axis_x_gyro->setRange(0,60);    // 设置坐标范围
@@ -107,7 +103,6 @@ void Widget::LineChartInitial(){
     axis_y_gyro->setTickCount(10);
     axis_x_gyro->setTitleText("X");
     axis_y_gyro->setTitleText("y");
-
     pen_groyx.setColor(Qt::yellow);
     pen_groyy.setColor(Qt::blue);
     pen_groyz.setColor(Qt::red);
@@ -122,18 +117,18 @@ void Widget::LineChartInitial(){
     chart_gyro->addSeries(line_series_gyroz);
     chart_view_gyro->setGeometry(400,0,800,400);    //设置位置
 
-    chart_acc->setTitle("Acceleration data");   //设置图表名称
 
+
+
+    chart_acc->setTitle("Acceleration data");   //设置图表名称
     chart_acc->addAxis(axis_x_acc, Qt::AlignBottom);    //设置坐标轴
     chart_acc->addAxis(axis_y_acc, Qt::AlignLeft);
     axis_x_acc->setRange(0,60);    // 设置坐标范围
-    axis_y_acc->setRange(-20000,+2000);
+    axis_y_acc->setRange(-500,500);
     axis_x_acc->setTickCount(7);    //设置网格数量，5根线，四个网格
     axis_y_acc->setTickCount(10);
     axis_x_acc->setTitleText("X");
     axis_y_acc->setTitleText("y");
-
-
     pen_accx.setColor(Qt::red);
     pen_accy.setColor(Qt::green);
     pen_accz.setColor(Qt::black);
@@ -146,8 +141,17 @@ void Widget::LineChartInitial(){
     chart_acc->addSeries(line_series_accx);
     chart_acc->addSeries(line_series_accy);
     chart_acc->addSeries(line_series_accz);
-
     chart_view_acc->setGeometry(400,400,800,400);    //设置位置
+
+//    float y = 0;
+//    for(float i = 0; i < 60; ++i){
+//        y = sin(i);
+//        qDebug() << i;
+//        qDebug() <<  y * 500;
+//        line_series_gyrox->append(i,y*500);
+//    }
+
+
 }
 
 void Widget::LineChartGetdata(QString str){
@@ -179,83 +183,49 @@ void Widget::LineChartGetdata(QString str){
     temp = str.section(';',6,6);
     temp = temp.mid(3,temp.length() - 3);
     accz = temp.toInt();
+
+
+//    if(gyrox > gyrox_max){
+//        gyrox_max = gyrox;
+//    }
+//    if(gyrox < gyrox_min){
+//        gyrox_min = gyrox;
+//    }
+//    qDebug() << "gyrox_max: " << gyrox_max <<"  gyrox_min: " << gyrox_min;
+
+
+//    if(gyroy > gyroy_max){
+//        gyroy_max = gyroy;
+//    }
+//    if(gyroy < gyroy_min){
+//        gyroy_min = gyroy;
+//    }
+//    qDebug() << "gyroy_max: " << gyroy_max <<"  gyroy_min: " << gyroy_min;
+
+
+
+//    if(gyroz > gyroz_max){
+//        gyroz_max = gyroz;
+//    }
+//    if(gyroz < gyroz_min){
+//        gyroz_min = gyroz;
+//    }
+//    qDebug() << "gyroz_max: " << gyroz_max <<"  gyroz_min: " << gyroz_min;
 }
 
 void Widget::LineChartDraw(){
-    line_series_accx->append(count_time,accx);
+    //line_series_accx->replace(10,accx);
     //line_series_accx->append(count_time,accx);
-    line_series_accx->append(count_time,accy);
-    line_series_accx->append(count_time,accz);
+    line_series_accx->append(20,accx+100);
+    line_series_accx->append(30,accx+2000);
 
-    count_time += 0.01;
-    if(count_time >= 6){
-        count_time = 0;
-    }
+    //line_series_accx->replace()
 }
 
 void Widget::OpenGLInitial(){
 
-    open_gl_widget_->setGeometry(0,140,400,400);
-
-    // 启用阴影平滑
-        glShadeModel(GL_SMOOTH);
-        // 白色背景
-        glClearColor(1.0, 1.0, 1.0, 1.0);
-        // 设置深度缓存
-        glClearDepth(1.0);
-        // 启用深度测试
-        glEnable(GL_DEPTH_TEST);
-        // 所作深度测试的类型
-        glDepthFunc(GL_LEQUAL);
-        // 告诉系统对透视进行修正
-        glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-        // 启用2D纹理映射
-        glEnable(GL_TEXTURE_2D);
-        // 加载纹理
-        //loadGLTextures();
-
-        glBegin(GL_QUAD_STRIP);         //填充凸多边形
-        glColor3f(1, 0, 0);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glColor3f(1, 1, 0);
-        glVertex3f(0.0f, 1.0f, 0.0f);
-        glColor3f(0, 1, 0);
-        glVertex3f(1.0f, 0.0f, 0.0f);
-        glColor3f(0, 1, 1);
-        glVertex3f(1.0f, 1.0f, 0.0f);
-        glColor3f(1, 0, 0);
-        glVertex3f(1.0f, 0.0f, -1.0f);
-        glColor3f(1, 1, 0);
-        glVertex3f(1.0f, 1.0f, -1.0f);
-        glColor3f(0, 1, 0);
-        glVertex3f(0.0f, 0.0f, -1.0f);
-        glColor3f(0, 1, 1);
-        glVertex3f(0.0f, 1.0f, -1.0f);
-        glColor3f(1, 0, 0);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glColor3f(1, 1, 0);
-        glVertex3f(0.0f, 1.0f, 0.0f);
-        glEnd();
-        glBegin(GL_QUAD_STRIP);
-        glColor3f(0, 0, 1);
-        glVertex3f(0.0f, 0.0f, 0.0f);
-        glColor3f(1, 0, 1);
-        glVertex3f(1.0f, 0.0f, 0.0f);
-        glColor3f(0, 1, 0);
-        glVertex3f(0.0f, 0.0f, -1.0f);
-        glColor3f(1, 0, 0);
-        glVertex3f(1.0f, 0.0f, -1.0f);
-        glColor3f(1, 1, 0);
-        glVertex3f(0.0f, 1.0f, 0.0f);
-        glColor3f(1, 0, 1);
-        glVertex3f(1.0f, 1.0f, 0.0f);
-        glColor3f(0, 0, 1);
-        glVertex3f(0.0f, 1.0f, -1.0f);
-        glColor3f(1, 0, 0);
-        glVertex3f(1.0f, 1.0f, -1.0f);
-        glEnd();
-
-
+   // glwidget_->setGeometry(0,140,400,400);
+    //glwidget_->GLWidgetStart();
 
 }
 

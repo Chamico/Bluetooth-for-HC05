@@ -10,10 +10,5 @@ int main(int argc, char *argv[])
     main_window_.resize(1200,800);
     main_window_.show();
 
-    GLWidget w;
-    w.resize(600, 600);
-    w.setWindowTitle(QObject::tr("Michael's OpenGL Framework"));
-    w.show();
-
     return a.exec();
 }

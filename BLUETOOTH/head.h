@@ -33,6 +33,9 @@ class GLWidget;
 #include <QTimer>
 #include <QString>
 
+#include <qmath.h>
+
+#include <QMainWindow>
 
 #include "Uart/uart.h"
 #include "Widget/widget.h"

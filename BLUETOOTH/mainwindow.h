@@ -1,7 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+
 #include "head.h"
 
 
@@ -26,6 +26,7 @@ private:
     Ui::MainWindow *ui;
     Uart *uart_;
     Widget *widget_;
+    GLWidget *glwidget_;
 
     QTimer *timer_receive_data;
 

@@ -13,12 +13,10 @@ private slots:
 private:
 
     QString temp;
-    int temperature = 0, gyrox = 0, gyroy = 0, gyroz = 0, accx = 0, accy = 0, accz = 0;
+
     int temperature_max = 0, gyrox_max = 0, gyroy_max = 0, gyroz_max = 0, accx_max = 0, accy_max = 0, accz_max = 0;
     int temperature_min = 0, gyrox_min = 0, gyroy_min = 0, gyroz_min = 0, accx_min = 0, accy_min = 0, accz_min = 0;
 
-
-    float count_time = 0;
 
     QValueAxis *axis_x_gyro;
     QValueAxis *axis_y_gyro;
@@ -34,6 +32,7 @@ private:
     QPen pen_accz;
 
     QOpenGLWidget *open_gl_widget_;
+
 
     void LabelBluetoothContronl();
     void RadioButtonBluetoothOpen();
@@ -74,6 +73,8 @@ public:
     void LineChartDraw();
     void OpenGLDraw();
     void LayoutFinal(QWidget *parent = nullptr);
+
+    int temperature = 0, gyrox = 0, gyroy = 0, gyroz = 0, accx = 0, accy = 0, accz = 0;
 };
 
 #endif // WIDGET_H

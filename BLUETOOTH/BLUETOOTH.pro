@@ -2,7 +2,7 @@ QT       += core gui
 QT       += serialport
 QT       += charts
 QT       +=core gui opengl
-
+TARGET = LineChart
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11

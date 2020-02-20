@@ -7,26 +7,26 @@ MainWindow::MainWindow(QWidget *parent)
 {
 
     ui->setupUi(this);
-    widget_ = new Widget(this);
-
-    widget_->WidgetInitial();
 
 
     uart_ = new Uart();
+    widget_ = new Widget(this);
 
+    glwidget_ = new GLWidget(this);
     timer_receive_data = new QTimer(this);
+
+
 
 //    // 连接信号槽
     ConnectSingnal();
-
-
+    widget_->WidgetInitial();
+    glwidget_->setGeometry(0,140,400,400);
 
 }
 
 void MainWindow::ConnectSingnal(){
     bool temp1 = connect(widget_->radio_button_bluetooth_open, SIGNAL(clicked(bool)), this, SLOT(BluetoothOpen()));
     bool temp2 = connect(widget_->radio_button_bluetooth_close, SIGNAL(clicked(bool)), this, SLOT(BluetoothClose()));
-//    bool temp3 = connect(ui->_pushButton_refresh,SIGNAL(clicked(bool)),this,SLOT(BluetoothRefresh()));
 
     bool tempz = connect(timer_receive_data, SIGNAL(timeout()), this, SLOT(UpdateReceive()));
 
@@ -59,6 +59,7 @@ void MainWindow::BluetoothOpen(){
         widget_->radio_button_bluetooth_close->setChecked(false);
     }
 
+    ConnectSingnal();
     uart_->UartOpen();
 }
 
@@ -108,7 +109,10 @@ void MainWindow::UpdateReceive(){
      widget_->plain_text_edit_origin_data->appendPlainText("\n");
 
      emit signals_mainwindow_send_data(temp);
-     widget_->LineChartDraw();
+     //widget_->LineChartDraw();
+     glwidget_->UpdateOpenGL(widget_->gyrox,widget_->gyroy,widget_->gyroz);
+     //glwidget_->paintGL();
+
 }
 
 MainWindow::~MainWindow()
