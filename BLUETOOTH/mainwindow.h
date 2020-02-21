@@ -48,6 +48,7 @@ private slots:
     void RadioButtonCloseSetChecked(bool);
     void RadioButtonOpenSetChecked(bool);
     void ComboBoxAvaliableSerialPortSet(QString);
+    void SetTimerInterval(int);
 
 };
 #endif // MAINWINDOW_H

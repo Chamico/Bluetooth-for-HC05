@@ -9,7 +9,8 @@ class Widget : public QObject
 
 private slots:
     void LineChartGetdata(QString);
-
+    void LineChartAccClicked(const QPointF &point);
+    void LineChartGyroClicked(const QPointF &point);
 private:
 
     QString temp;
@@ -31,8 +32,6 @@ private:
     QPen pen_accy;
     QPen pen_accz;
 
-    QOpenGLWidget *open_gl_widget_;
-
 
     void LabelBluetoothContronl();
     void RadioButtonBluetoothOpen();
@@ -40,8 +39,10 @@ private:
     void LabelUartNumberAvalible();
     void ComboBoxUartNumberAvalible();
     void PlainTextEditOriginData();
+    void SpinBoxSetTimerInterval();
+    void LabelSpinBox();
     void LineChartInitial();
-    void OpenGLInitial();
+
 
 public:
     Widget(QWidget *parent = nullptr);
@@ -57,6 +58,10 @@ public:
 
     QPlainTextEdit *plain_text_edit_origin_data;
 
+    QLabel *label_spin_box_head;
+    QSpinBox *spin_box_set_timer_interval;
+    QLabel *label_spin_box_tail;
+
     QChart *chart_gyro;
     QChartView *chart_view_gyro;
     QLineSeries *line_series_gyrox;
@@ -71,8 +76,7 @@ public:
 
 
     void LineChartDraw();
-    void OpenGLDraw();
-    void LayoutFinal(QWidget *parent = nullptr);
+    void SetSystemLayout(QWidget *parent = nullptr);
 
     int temperature = 0, gyrox = 0, gyroy = 0, gyroz = 0, accx = 0, accy = 0, accz = 0;
 };

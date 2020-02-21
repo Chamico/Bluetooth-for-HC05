@@ -15,18 +15,29 @@ MainWindow::MainWindow(QWidget *parent)
     glwidget_ = new GLWidget(this);
     timer_receive_data = new QTimer(this);
 
-
+    widget_->WidgetInitial();
+    glwidget_->setGeometry(0,140,400,400);
 
 //    // 连接信号槽
     ConnectSingnal();
-    widget_->WidgetInitial();
-    glwidget_->setGeometry(0,140,400,400);
+
+    widget_->SetSystemLayout(this);
+
 
 }
 
 void MainWindow::ConnectSingnal(){
     bool temp1 = connect(widget_->radio_button_bluetooth_open, SIGNAL(clicked(bool)), this, SLOT(BluetoothOpen()));
     bool temp2 = connect(widget_->radio_button_bluetooth_close, SIGNAL(clicked(bool)), this, SLOT(BluetoothClose()));
+    bool temp3 = connect(widget_->spin_box_set_timer_interval,SIGNAL(valueChanged(int)),this,SLOT(SetTimerInterval(int)));
+
+    bool temp4 = connect(widget_->line_series_accx, SIGNAL(pressed(const QPointF)), widget_, SLOT(LineChartAccClicked(const QPointF)));
+    bool temp5 = connect(widget_->line_series_accy, SIGNAL(pressed(const QPointF)), widget_, SLOT(LineChartAccClicked(const QPointF)));
+    bool temp6 = connect(widget_->line_series_accz, SIGNAL(pressed(const QPointF)), widget_, SLOT(LineChartAccClicked(const QPointF)));
+
+    bool temp7 = connect(widget_->line_series_gyrox, SIGNAL(pressed(const QPointF)), widget_, SLOT(LineChartGyroClicked(const QPointF)));
+    bool temp8 = connect(widget_->line_series_gyroy, SIGNAL(pressed(const QPointF)), widget_, SLOT(LineChartGyroClicked(const QPointF)));
+    bool temp9 = connect(widget_->line_series_gyroz, SIGNAL(pressed(const QPointF)), widget_, SLOT(LineChartGyroClicked(const QPointF)));
 
     bool tempz = connect(timer_receive_data, SIGNAL(timeout()), this, SLOT(UpdateReceive()));
 
@@ -36,7 +47,13 @@ void MainWindow::ConnectSingnal(){
     bool tempd = connect(this,SIGNAL(signals_mainwindow_send_data(QString)),widget_,SLOT(LineChartGetdata(QString)));
     if(temp1
             && temp2
-//            && temp3
+            && temp3
+            && temp4
+            && temp5
+            && temp6
+            && temp7
+            && temp8
+            && temp9
             && tempz
             && tempa
             && tempb
@@ -109,10 +126,12 @@ void MainWindow::UpdateReceive(){
      widget_->plain_text_edit_origin_data->appendPlainText("\n");
 
      emit signals_mainwindow_send_data(temp);
-     //widget_->LineChartDraw();
+     widget_->LineChartDraw();
      glwidget_->UpdateOpenGL(widget_->gyrox,widget_->gyroy,widget_->gyroz);
-     //glwidget_->paintGL();
+}
 
+void MainWindow::SetTimerInterval(int data){
+    timer_receive_data->setInterval(data);
 }
 
 MainWindow::~MainWindow()

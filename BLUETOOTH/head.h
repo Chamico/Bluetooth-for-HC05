@@ -10,11 +10,14 @@ class GLWidget;
 #include <QLabel>
 #include <QRadioButton>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QGridLayout>
 #include <QComboBox>
 #include <QPlainTextEdit>
 #include <QtCharts/QChartView>//显示图表
 #include <QtCharts/QLineSeries>//线系列
 #include <QtCharts/QValueAxis>
+#include <QSpinBox>
 
 #include <QOpenGLWidget>
 #include <GL/gl.h>
